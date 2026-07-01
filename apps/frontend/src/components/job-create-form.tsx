@@ -2,8 +2,27 @@ import { type FormEvent, useState } from 'react';
 
 import { useJobsStore } from '../store/jobs.store';
 
+const DEFAULT_URLS = [
+  'https://example.com',
+  'https://google.com',
+  'https://github.com',
+  'https://stackoverflow.com',
+  'https://npmjs.com',
+  'https://nodejs.org',
+  'https://nestjs.com',
+  'https://react.dev',
+  'https://vite.dev',
+  'https://www.typescriptlang.org',
+  'https://httpbin.org/status/200',
+  'https://httpbin.org/status/201',
+  'https://httpbin.org/status/204',
+  'https://httpbin.org/status/400',
+  'https://httpbin.org/status/404',
+  'https://httpbin.org/status/500',
+].join('\n');
+
 export function JobCreateForm() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(DEFAULT_URLS);
   const createJob = useJobsStore(state => state.createJob);
   const isCreating = useJobsStore(state => state.isCreating);
 
