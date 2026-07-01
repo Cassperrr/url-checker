@@ -66,10 +66,6 @@ export class JobsProcessor {
           item.status = 'in_progress';
           item.startedAt = new Date();
 
-          this.logger.debug(
-            `Job ${job.id}: HEAD start ${item.url}, pending=${queue.pending}, size=${queue.size}`,
-          );
-
           return fetch(item.url, {
             method: 'HEAD',
             signal: job.abortController.signal,

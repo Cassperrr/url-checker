@@ -59,6 +59,19 @@ textarea {
   font-size: 18px;
 }
 
+.section-header {
+  display: flex;
+  min-height: 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.inline-loader {
+  color: #68758a;
+  font-size: 12px;
+}
+
 .page-title {
   font-size: 24px;
 }
@@ -110,11 +123,44 @@ button:disabled {
   align-items: center;
   min-height: 24px;
   border-radius: 999px;
+  border: 1px solid transparent;
   padding: 2px 8px;
   font-size: 12px;
   font-weight: 700;
   color: #253247;
   background: #e7edf6;
+}
+
+.status-badge--pending {
+  border-color: #c9d3e3;
+  color: #526175;
+  background: #f3f6fb;
+}
+
+.status-badge--in_progress {
+  border-color: #9fc2ff;
+  color: #154f9f;
+  background: #eaf2ff;
+}
+
+.status-badge--success,
+.status-badge--completed {
+  border-color: #94d3a2;
+  color: #17602b;
+  background: #eaf8ee;
+}
+
+.status-badge--error,
+.status-badge--failed {
+  border-color: #eba0a0;
+  color: #932525;
+  background: #fff0f0;
+}
+
+.status-badge--cancelled {
+  border-color: #d3c2ef;
+  color: #5c3a91;
+  background: #f4efff;
 }
 
 .error-banner {

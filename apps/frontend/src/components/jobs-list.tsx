@@ -10,8 +10,13 @@ export function JobsList() {
 
   return (
     <section className='panel-section'>
-      <h2 className='section-title'>Jobs</h2>
-      {isJobsLoading ? <div className='empty-state'>Loading jobs...</div> : null}
+      <div className='section-header'>
+        <h2 className='section-title'>Jobs</h2>
+        {isJobsLoading && jobs.length > 0 ? <span className='inline-loader'>Updating</span> : null}
+      </div>
+      {isJobsLoading && jobs.length === 0 ? (
+        <div className='empty-state'>Loading jobs...</div>
+      ) : null}
       {!isJobsLoading && jobs.length === 0 ? <div className='empty-state'>No jobs yet.</div> : null}
       <div className='jobs-list'>
         {jobs.map(job => (
