@@ -1,0 +1,30 @@
+{
+  "name": "url-checker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.2.2",
+  "scripts": {
+    "dev": "pnpm --filter @url-checker/backend dev",
+    "dev:backend": "pnpm --filter @url-checker/backend dev",
+    "dev:frontend": "pnpm --filter @url-checker/frontend dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^16.0.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  }
+}
