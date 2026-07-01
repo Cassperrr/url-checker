@@ -1,9 +1,17 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
-import { ConfigModuleFactory } from './config.module.factory';
 import { schema } from './config.schema';
+import { getEnvPath } from './get-env-path';
+import { validateSchema } from './validate-schema';
 
 @Module({
-  imports: [ConfigModuleFactory.register(schema)],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: getEnvPath(),
+      validate: validateSchema(schema),
+    }),
+  ],
 })
 export class AppConfigModule {}

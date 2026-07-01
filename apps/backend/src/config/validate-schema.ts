@@ -3,7 +3,7 @@ import z from 'zod';
 
 type ConfigValidateFn = NonNullable<ConfigModuleOptions['validate']>;
 
-export function validate<T extends z.ZodTypeAny>(schema: T) {
+export function validateSchema<T extends z.ZodTypeAny>(schema: T) {
   const validateConfig: ConfigValidateFn = config => {
     const result = schema.safeParse(config);
 

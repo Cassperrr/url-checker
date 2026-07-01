@@ -38,6 +38,7 @@ async function bootstrap() {
   app.enableShutdownHooks([ShutdownSignal.SIGINT, ShutdownSignal.SIGTERM]);
 
   swaggerSetup(app);
+
   await app.listen(port, host, () => {
     const logger = new Logger('Bootstrap');
     logger.log(`App run on :${port}`);
