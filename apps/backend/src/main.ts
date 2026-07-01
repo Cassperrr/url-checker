@@ -5,6 +5,7 @@ import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fa
 
 import { AppModule } from './app.module';
 import { getConfigValue, schema } from './config';
+import { swaggerSetup } from './docs';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -36,6 +37,7 @@ async function bootstrap() {
 
   app.enableShutdownHooks([ShutdownSignal.SIGINT, ShutdownSignal.SIGTERM]);
 
+  swaggerSetup(app);
   await app.listen(port, host, () => {
     const logger = new Logger('Bootstrap');
     logger.log(`App run on :${port}`);

@@ -39,8 +39,6 @@ export class JobsService {
       this.logger.error(`Job ${job.id} failed`, error);
     });
 
-    this.logger.log(`New job created: ${job.id}, urls=${urls.length}`);
-
     return { jobId };
   }
 

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import PQueue from 'p-queue';
 
@@ -8,10 +8,14 @@ import type { Job, UrlCheckItem } from './types';
 
 @Injectable()
 export class JobsProcessor {
+  private readonly logger = new Logger(JobsProcessor.name);
+
   public constructor(@Inject() private readonly config: ConfigService<schema, true>) {}
 
   public async run(job: Job): Promise<void> {
     job.status = 'in_progress';
+
+    this.logger.log(`Job ${job.id} status -> in_progress`);
 
     const queue = new PQueue({
       concurrency: getConfigValue(this.config, 'JOB_CONCURRENCY'),
@@ -24,6 +28,7 @@ export class JobsProcessor {
 
     if (!job.abortController.signal.aborted) {
       job.status = 'completed';
+      this.logger.verbose(`Job ${job.id} status -> completed`);
     }
   }
 
@@ -34,6 +39,8 @@ export class JobsProcessor {
 
     job.status = 'cancelled';
     job.abortController.abort();
+
+    this.logger.warn(`Job ${job.id} status -> cancelled`);
 
     for (const item of job.items) {
       if (item.status === 'pending') {
@@ -59,6 +66,10 @@ export class JobsProcessor {
           item.status = 'in_progress';
           item.startedAt = new Date();
 
+          this.logger.debug(
+            `Job ${job.id}: HEAD start ${item.url}, pending=${queue.pending}, size=${queue.size}`,
+          );
+
           return fetch(item.url, {
             method: 'HEAD',
             signal: job.abortController.signal,
@@ -75,8 +86,14 @@ export class JobsProcessor {
 
       await this.delayRandom(job.abortController.signal);
 
-      item.status = 'success';
       item.httpStatusCode = response.status;
+
+      if (response.ok) {
+        item.status = 'success';
+      } else {
+        item.status = 'error';
+        item.errorMessage = `HTTP status ${response.status}`;
+      }
     } catch (error) {
       if (job.abortController.signal.aborted) {
         item.status = 'cancelled';

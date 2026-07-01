@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { ApiParam } from '@nestjs/swagger';
 import type {
   CancelJobResponse,
   CreateJobResponse,
@@ -23,11 +24,17 @@ export class JobsController {
     return this.jobsService.findAll();
   }
 
+  @ApiParam({
+    name: 'id',
+  })
   @Get(':id')
   public findById(@Param() param: JobIdParamRequestDto): JobDetailsResponse {
     return this.jobsService.findById(param.id);
   }
 
+  @ApiParam({
+    name: 'id',
+  })
   @Delete(':id')
   public cancel(@Param() param: JobIdParamRequestDto): CancelJobResponse {
     return this.jobsService.cancel(param.id);

@@ -5,4 +5,5 @@ packages:
 onlyBuiltDependencies:
   - unrs-resolver
 allowBuilds:
+  '@scarf/scarf': true
   unrs-resolver: true
